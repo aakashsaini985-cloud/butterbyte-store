@@ -65,7 +65,9 @@ export const wishlist = {
 
 export function useStore() {
   const [, setTick] = useState(0);
+  const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
+    setHydrated(true);
     const l = () => setTick((t) => t + 1);
     listeners.add(l);
     const onStorage = (e: StorageEvent) => { if (e.key === CART_KEY || e.key === WISH_KEY) l(); };
@@ -73,9 +75,9 @@ export function useStore() {
     return () => { listeners.delete(l); window.removeEventListener("storage", onStorage); };
   }, []);
   return {
-    cartCount: typeof window === "undefined" ? 0 : cart.count(),
-    wishCount: typeof window === "undefined" ? 0 : wishlist.count(),
-    cartItems: typeof window === "undefined" ? [] : cart.get(),
-    wishIds: typeof window === "undefined" ? [] : wishlist.get(),
+    cartCount: hydrated ? cart.count() : 0,
+    wishCount: hydrated ? wishlist.count() : 0,
+    cartItems: hydrated ? cart.get() : [],
+    wishIds: hydrated ? wishlist.get() : [],
   };
 }
