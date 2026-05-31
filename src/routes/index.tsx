@@ -73,9 +73,9 @@ function Home() {
         <Hero banners={data?.banners ?? []} />
         <TrustBar />
         <ShopByGender />
-        <Section title="New Arrivals" subtitle="Fresh women's tops, hand-picked for the season" link="/women" linkLabel="See more">
-          <ProductRow items={data?.womenTops ?? []} />
-          <SeeMore to="/women" label="See more women's categories" />
+        <Section title="New Arrivals" subtitle="Fresh women's tops, hand-picked for the season" link="/c/women/dress" linkLabel="See more">
+          <WomenPreviewRow items={data?.womenTops ?? []} />
+          <SeeMore to="/c/women/dress" label="See more women's categories" />
         </Section>
         <BannerStrip />
         <Section title="Men's New Arrivals" subtitle="The latest drops for him">
