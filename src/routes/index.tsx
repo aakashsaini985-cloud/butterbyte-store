@@ -386,7 +386,10 @@ function BrandStory() {
         <div className="text-[10px] tracking-[0.3em] uppercase text-[oklch(0.78_0.13_85)]">Our story</div>
         <h2 className="font-display text-3xl md:text-5xl mt-3">Made in India. Made for you.</h2>
         <p className="mt-6 text-foreground/70 leading-relaxed">
-          {SITE.brand} is a Delhi-born fashion house obsessed with details — the weight of fabric, the fall of a hem, the way light catches embroidery at dusk. Every piece is designed to feel both modern and timeless.
+          {SITE.brand} is a Delhi-born fashion house where tradition meets contemporary elegance. We are passionate about every detail — from the richness of premium fabrics and the precision of every stitch to the way each silhouette drapes effortlessly. Inspired by India&rsquo;s timeless craftsmanship and modern fashion sensibilities, our collections are designed to make every moment feel special.
+        </p>
+        <p className="mt-4 text-foreground/70 leading-relaxed italic">
+          Crafted with passion. Designed for elegance. Made to be remembered.
         </p>
         <Link to="/about" className="mt-8 inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] gold-underline">
           Read our story <ArrowRight className="h-4 w-4" />
