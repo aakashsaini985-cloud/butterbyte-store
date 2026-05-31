@@ -13,6 +13,23 @@ import heroWomen from "@/assets/hero-women.jpg";
 import heroCollection from "@/assets/hero-collection.jpg";
 import shopWomenEthnic from "@/assets/shop-women-ethnic.jpg";
 import shopMenEthnic from "@/assets/shop-men-ethnic.jpg";
+import catDress from "@/assets/cat-dress.jpg";
+import catJeans from "@/assets/cat-jeans.jpg";
+import catKurtaSet from "@/assets/cat-kurta-set.jpg";
+import catKurti from "@/assets/cat-kurti.jpg";
+import catLehenga from "@/assets/cat-lehenga.jpg";
+import catPyjamas from "@/assets/cat-pyjamas.jpg";
+import catSaree from "@/assets/cat-saree.jpg";
+import catTops from "@/assets/cat-tops.jpg";
+import catBoxers from "@/assets/cat-boxers.jpg";
+import catEthnicJackets from "@/assets/cat-ethnic-jackets.jpg";
+import catMensJeans from "@/assets/cat-mens-jeans.jpg";
+import catJoggers from "@/assets/cat-joggers.jpg";
+import catKurtas from "@/assets/cat-kurtas.jpg";
+import catSherwani from "@/assets/cat-sherwani.jpg";
+import catShirt from "@/assets/cat-shirt.jpg";
+import catMensShorts from "@/assets/cat-mens-shorts.jpg";
+import catSuit from "@/assets/cat-suit.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,23 +44,23 @@ export const Route = createFileRoute("/")({
 });
 
 const CAT_IMG: Record<string, string> = {
-  dress: "https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=900&q=80",
-  "kurta-set": "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=900&q=80",
-  kurti: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=900&q=80",
-  "lehenga-choli-sets": "https://images.unsplash.com/photo-1610030469668-8e4a7b5a3a98?w=900&q=80",
-  saree: "https://images.unsplash.com/photo-1610189000732-2c4f1e0f0aef?w=900&q=80",
-  tops: "https://images.unsplash.com/photo-1564257631407-4deb1f99d992?w=900&q=80",
-  jeans: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=900&q=80",
-  "pyjamas-shorts": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=900&q=80",
-  shirt: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=900&q=80",
-  kurtas: "https://images.unsplash.com/photo-1622445275576-721325763afe?w=900&q=80",
-  "mens-jeans": "https://images.unsplash.com/photo-1542272604-787c3835535d?w=900&q=80",
-  "ethnic-jackets": "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=900&q=80",
-  sherwani: "https://images.unsplash.com/photo-1622445275463-afa2ab738c34?w=900&q=80",
-  suit: "https://images.unsplash.com/photo-1593030103066-0093718efeb9?w=900&q=80",
-  "mens-shorts": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=900&q=80",
-  "joggers-track-pants": "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=900&q=80",
-  boxers: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=900&q=80",
+  dress: catDress,
+  jeans: catJeans,
+  "kurta-set": catKurtaSet,
+  kurti: catKurti,
+  "lehenga-choli-sets": catLehenga,
+  "pyjamas-shorts": catPyjamas,
+  saree: catSaree,
+  tops: catTops,
+  boxers: catBoxers,
+  "ethnic-jackets": catEthnicJackets,
+  "mens-jeans": catMensJeans,
+  "joggers-track-pants": catJoggers,
+  kurtas: catKurtas,
+  sherwani: catSherwani,
+  shirt: catShirt,
+  "mens-shorts": catMensShorts,
+  suit: catSuit,
 };
 
 function Home() {
