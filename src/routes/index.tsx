@@ -156,7 +156,7 @@ function Hero({ banners: _banners }: { banners: any[] }) {
 
   return (
     <section
-      className="relative h-[88vh] min-h-[560px] w-full overflow-hidden bg-black"
+      className="relative h-[70vh] min-h-[460px] md:h-[88vh] md:min-h-[560px] w-full overflow-hidden bg-black"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       aria-roledescription="carousel"
@@ -176,7 +176,7 @@ function Hero({ banners: _banners }: { banners: any[] }) {
         </motion.div>
       </AnimatePresence>
 
-      <div className={`relative h-full mx-auto max-w-7xl px-6 flex flex-col justify-end pb-20 md:pb-28 text-white`}>
+      <div className={`relative h-full mx-auto max-w-7xl px-5 md:px-6 flex flex-col justify-end pb-14 md:pb-28 text-white`}>
         <AnimatePresence mode="wait">
           <motion.div
             key={i}
@@ -186,14 +186,14 @@ function Hero({ banners: _banners }: { banners: any[] }) {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className={`flex flex-col ${alignCls} max-w-2xl ${s.align === "right" ? "ml-auto" : s.align === "center" ? "mx-auto" : ""}`}
           >
-            <div className="text-[11px] tracking-[0.35em] uppercase mb-4 text-[oklch(0.85_0.12_85)]">{s.eyebrow}</div>
-            <h1 className="font-display text-5xl md:text-7xl lg:text-[5.5rem] leading-[0.95] tracking-tight">{s.title}</h1>
-            <p className="mt-5 text-base md:text-lg text-white/85 max-w-xl">{s.subtitle}</p>
-            <div className={`mt-9 flex flex-wrap gap-3 ${s.align === "center" ? "justify-center" : s.align === "right" ? "justify-end" : ""}`}>
-              <Link to={s.primary.href} className="group inline-flex items-center gap-2 bg-white text-black px-7 py-3.5 text-xs uppercase tracking-[0.25em] hover:bg-[oklch(0.85_0.12_85)] transition">
+            <div className="text-[10px] md:text-[11px] tracking-[0.3em] md:tracking-[0.35em] uppercase mb-3 md:mb-4 text-[oklch(0.85_0.12_85)]">{s.eyebrow}</div>
+            <h1 className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-[5.5rem] leading-[1] md:leading-[0.95] tracking-tight">{s.title}</h1>
+            <p className="mt-3 md:mt-5 text-sm md:text-lg text-white/85 max-w-xl">{s.subtitle}</p>
+            <div className={`mt-6 md:mt-9 flex flex-wrap gap-2.5 md:gap-3 ${s.align === "center" ? "justify-center" : s.align === "right" ? "justify-end" : ""}`}>
+              <Link to={s.primary.href} className="group inline-flex items-center gap-2 bg-white text-black px-5 md:px-7 py-3 md:py-3.5 text-[11px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.25em] hover:bg-[oklch(0.85_0.12_85)] transition">
                 {s.primary.label} <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link to={s.secondary.href} className="inline-flex items-center gap-2 border border-white/50 text-white px-7 py-3.5 text-xs uppercase tracking-[0.25em] hover:bg-white hover:text-black transition backdrop-blur-sm">
+              <Link to={s.secondary.href} className="inline-flex items-center gap-2 border border-white/50 text-white px-5 md:px-7 py-3 md:py-3.5 text-[11px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.25em] hover:bg-white hover:text-black transition backdrop-blur-sm">
                 {s.secondary.label}
               </Link>
             </div>
