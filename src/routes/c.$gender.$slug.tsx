@@ -97,7 +97,7 @@ function CategoryPage() {
   const setSearch = (patch: Partial<CatSearch>) => {
     navigate({
       params: { gender, slug },
-      search: (prev) => {
+      search: (prev: CatSearch) => {
         const next: CatSearch = { ...prev, ...patch };
         // Strip empty/default values so URLs stay clean.
         if (!next.sizes || next.sizes.length === 0) delete next.sizes;
