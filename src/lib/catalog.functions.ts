@@ -29,27 +29,30 @@ export type ProductCard = {
 };
 
 async function mapProducts(rows: any[]): Promise<ProductCard[]> {
-  return rows.map((r) => ({
-    id: r.id,
-    slug: r.slug,
-    name: r.name,
-    brand: r.brand,
-    selling_price: Number(r.selling_price),
-    mrp: Number(r.mrp),
-    discount_pct: r.discount_pct,
-    image_url: r.product_images?.[0]?.url ?? null,
-    category_slug: r.categories?.slug ?? null,
-    category_name: r.categories?.name ?? null,
-    rating_avg: Number(r.rating_avg),
-    rating_count: r.rating_count,
-    sizes: Array.from(
-      new Set(
-        ((r.product_variants ?? []) as Array<{ size: string | null; stock_qty: number }>)
-          .filter((v) => v.size)
-          .map((v) => v.size as string),
+  return rows
+    .map((r) => ({
+      id: r.id,
+      slug: r.slug,
+      name: r.name,
+      brand: r.brand,
+      selling_price: Number(r.selling_price),
+      mrp: Number(r.mrp),
+      discount_pct: r.discount_pct,
+      image_url: r.product_images?.[0]?.url ?? null,
+      category_slug: r.categories?.slug ?? null,
+      category_name: r.categories?.name ?? null,
+      rating_avg: Number(r.rating_avg),
+      rating_count: r.rating_count,
+      sizes: Array.from(
+        new Set(
+          ((r.product_variants ?? []) as Array<{ size: string | null; stock_qty: number }>)
+            .filter((v) => v.size)
+            .map((v) => v.size as string),
+        ),
       ),
-    ),
-  }));
+    }))
+    // Hide products without a valid image across the entire site
+    .filter((p) => typeof p.image_url === "string" && p.image_url.trim().length > 0);
 }
 
 export const getHomeData = createServerFn({ method: "GET" }).handler(async () => {
