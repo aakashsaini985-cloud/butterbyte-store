@@ -299,26 +299,6 @@ function ShopByGender() {
   );
 }
 
-function CategoryGrid({ title, gender, cats }: { title: string; gender: "men" | "women"; cats: { slug: string; name: string }[] }) {
-  return (
-    <section className="mx-auto max-w-7xl px-6 py-10 md:py-16">
-      <div className="mb-8 flex items-end justify-between">
-        <h2 className="font-display text-2xl md:text-4xl">{title}</h2>
-        <Link to={`/${gender}`} className="text-xs uppercase tracking-[0.2em] gold-underline">View all</Link>
-      </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {cats.map((c) => (
-          <Link key={c.slug} to="/c/$gender/$slug" params={{ gender, slug: c.slug }} className="group">
-            <div className="aspect-square overflow-hidden bg-muted">
-              <img src={CAT_IMG[c.slug] || "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&q=80"} alt={c.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-            </div>
-            <div className="text-sm mt-3 text-center">{c.name}</div>
-          </Link>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 function Section({ title, subtitle, link, linkLabel, children }: { title: string; subtitle?: string; link?: string; linkLabel?: string; children: React.ReactNode }) {
   return (
