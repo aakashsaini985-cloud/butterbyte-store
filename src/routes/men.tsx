@@ -1,37 +1,51 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { ProductCard } from "@/components/product-card";
-import { listProducts } from "@/lib/catalog.functions";
 import { MEN_CATEGORIES } from "@/lib/site";
+import catBoxers from "@/assets/cat-boxers.jpg";
+import catEthnicJackets from "@/assets/cat-ethnic-jackets.jpg";
+import catMensJeans from "@/assets/cat-mens-jeans.jpg";
+import catJoggers from "@/assets/cat-joggers.jpg";
+import catKurtas from "@/assets/cat-kurtas.jpg";
+import catSherwani from "@/assets/cat-sherwani.jpg";
+import catShirt from "@/assets/cat-shirt.jpg";
+import catMensShorts from "@/assets/cat-mens-shorts.jpg";
+import catSuit from "@/assets/cat-suit.jpg";
+
+const CAT_IMG: Record<string, string> = {
+  boxers: catBoxers,
+  "ethnic-jackets": catEthnicJackets,
+  "mens-jeans": catMensJeans,
+  "joggers-track-pants": catJoggers,
+  kurtas: catKurtas,
+  sherwani: catSherwani,
+  shirt: catShirt,
+  "mens-shorts": catMensShorts,
+  suit: catSuit,
+};
 
 export const Route = createFileRoute("/men")({
-  head: () => ({ meta: [{ title: "Men — BUTTERBYTE STORE" }, { name: "description", content: "Shop men's shirts, kurtas, jeans, sherwanis and more." }] }),
+  head: () => ({ meta: [{ title: "Shop Men by Category — BUTTERBYTE STORE" }, { name: "description", content: "Browse men's categories — shirts, kurtas, jeans, sherwanis, suits and more." }] }),
   component: Men,
 });
 
 function Men() {
-  const { data, isLoading } = useQuery({ queryKey: ["men"], queryFn: () => listProducts({ data: { gender: "men", limit: 60 } }) });
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1 mx-auto max-w-7xl px-6 py-10 w-full">
         <h1 className="font-display text-5xl md:text-6xl mb-2">Men</h1>
-        <p className="text-muted-foreground mb-8">Sharp tailoring and easy essentials.</p>
-        <div className="flex gap-2 overflow-x-auto pb-3 mb-8 no-scrollbar">
+        <p className="text-muted-foreground mb-10">Shop by category — sharp tailoring and easy essentials.</p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10">
           {MEN_CATEGORIES.map((c) => (
-            <Link key={c.slug} to="/c/$gender/$slug" params={{ gender: "men", slug: c.slug }} className="shrink-0 px-4 py-2 text-xs uppercase tracking-[0.18em] border hover:bg-black hover:text-white transition">{c.name}</Link>
+            <Link key={c.slug} to="/c/$gender/$slug" params={{ gender: "men", slug: c.slug }} className="group">
+              <div className="aspect-[3/4] overflow-hidden bg-muted">
+                <img src={CAT_IMG[c.slug]} alt={c.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              </div>
+              <div className="mt-3 text-center text-sm uppercase tracking-[0.18em]">{c.name}</div>
+            </Link>
           ))}
         </div>
-
-        {isLoading ? (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">{Array.from({ length: 8 }).map((_, i) => <div key={i} className="aspect-[3/4] bg-muted animate-pulse" />)}</div>
-        ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10">
-            {data?.products.map((p) => <ProductCard key={p.id} p={p} />)}
-          </div>
-        )}
       </main>
       <Footer />
     </div>
