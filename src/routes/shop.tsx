@@ -42,7 +42,7 @@ function Shop() {
         <div className="flex flex-wrap gap-3 mb-8 items-center">
           <select
             value={s.sort ?? "new"}
-            onChange={(e) => navigate({ search: (prev) => ({ ...prev, sort: e.target.value as any }) })}
+            onChange={(e) => navigate({ search: (prev: typeof s) => ({ ...prev, sort: e.target.value as typeof s.sort }) })}
             className="border px-3 py-2 text-sm bg-background"
           >
             <option value="new">Newest</option>
@@ -53,7 +53,7 @@ function Shop() {
           {(["new", "bestsellers", "sale", "trending"] as const).map((f) => (
             <button
               key={f}
-              onClick={() => navigate({ search: (prev) => ({ ...prev, filter: prev.filter === f ? undefined : f }) })}
+              onClick={() => navigate({ search: (prev: typeof s) => ({ ...prev, filter: prev.filter === f ? undefined : f }) })}
               className={`px-3 py-2 text-xs uppercase tracking-[0.18em] border transition ${s.filter === f ? "bg-black text-white border-black" : "border-border hover:border-foreground"}`}
             >
               {f}
