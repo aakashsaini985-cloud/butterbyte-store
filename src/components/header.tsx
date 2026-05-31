@@ -5,6 +5,7 @@ import { useStore } from "@/lib/store";
 import { WOMEN_CATEGORIES, MEN_CATEGORIES, SITE } from "@/lib/site";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { SearchOverlay } from "@/components/search-overlay";
+import { BrandLogo } from "@/components/brand-logo";
 
 export function Header() {
   const { cartCount, wishCount } = useStore();
@@ -34,9 +35,8 @@ export function Header() {
                   <SidebarNav />
                 </SheetContent>
               </Sheet>
-              <Link to="/" className="font-display font-bold text-lg md:text-xl tracking-tight">
-                {SITE.brand}
-              </Link>
+              <BrandLogo size="md" />
+
             </div>
 
             <div className="flex items-center gap-3 md:gap-4">
@@ -72,8 +72,7 @@ function SidebarNav() {
   return (
     <div className="flex flex-col h-full">
       <div className="px-6 pt-8 pb-4 border-b">
-        <div className="font-display font-bold text-xl">{SITE.brand}</div>
-        <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mt-1">Modern Indian Fashion</div>
+        <BrandLogo size="lg" asLink={false} withTagline />
       </div>
       <nav className="px-6 py-4 flex-1">
         <Link to="/" className={linkCls}>Home</Link>
