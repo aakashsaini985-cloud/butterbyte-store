@@ -7,7 +7,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { ProductCard } from "@/components/product-card";
 import { getHomeData } from "@/lib/catalog.functions";
-import { WOMEN_CATEGORIES, MEN_CATEGORIES, SITE } from "@/lib/site";
+import { SITE } from "@/lib/site";
 import heroMen from "@/assets/hero-men.jpg";
 import heroWomen from "@/assets/hero-women.jpg";
 import heroCollection from "@/assets/hero-collection.jpg";
@@ -73,23 +73,34 @@ function Home() {
         <Hero banners={data?.banners ?? []} />
         <TrustBar />
         <ShopByGender />
-        <CategoryGrid title="Shop Women by Category" gender="women" cats={WOMEN_CATEGORIES} />
-        <Section title="New Arrivals" subtitle="Fresh drops, hand-picked for the season" link="/categories" linkLabel="See all new">
-          <ProductRow items={data?.newArrivals ?? []} />
+        <Section title="New Arrivals" subtitle="Fresh women's tops, hand-picked for the season" link="/women" linkLabel="See more">
+          <ProductRow items={data?.womenTops ?? []} />
+          <SeeMore to="/women" label="See more women's categories" />
         </Section>
         <BannerStrip />
-        <Section title="Bestsellers" subtitle="Loved by thousands across India" link="/shop" linkLabel="Shop bestsellers">
-          <ProductRow items={data?.bestSellers ?? []} />
+        <Section title="Men's New Arrivals" subtitle="The latest drops for him">
+          <ProductRow items={data?.menNewArrivals ?? []} />
+          <SeeMore to="/men" label="See more men's categories" />
         </Section>
-        <CategoryGrid title="Shop Men by Category" gender="men" cats={MEN_CATEGORIES} />
-        <Section title="Trending Now" subtitle="What the country is wearing this week" link="/shop" linkLabel="View all">
-          <ProductRow items={data?.trending ?? []} />
+        <Section title="Men's Best Sellers" subtitle="Loved by thousands across India">
+          <ProductRow items={data?.menBestSellers ?? []} />
+          <SeeMore to="/men" label="See more men's categories" />
         </Section>
         <Reviews />
         <BrandStory />
         <Newsletter />
       </main>
       <Footer />
+    </div>
+  );
+}
+
+function SeeMore({ to, label }: { to: string; label: string }) {
+  return (
+    <div className="mt-10 flex justify-center">
+      <Link to={to} className="group inline-flex items-center gap-2 border border-foreground/80 text-foreground px-7 py-3.5 text-xs uppercase tracking-[0.25em] hover:bg-foreground hover:text-background transition">
+        {label} <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+      </Link>
     </div>
   );
 }
@@ -288,26 +299,6 @@ function ShopByGender() {
   );
 }
 
-function CategoryGrid({ title, gender, cats }: { title: string; gender: "men" | "women"; cats: { slug: string; name: string }[] }) {
-  return (
-    <section className="mx-auto max-w-7xl px-6 py-10 md:py-16">
-      <div className="mb-8 flex items-end justify-between">
-        <h2 className="font-display text-2xl md:text-4xl">{title}</h2>
-        <Link to={`/${gender}`} className="text-xs uppercase tracking-[0.2em] gold-underline">View all</Link>
-      </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {cats.map((c) => (
-          <Link key={c.slug} to="/c/$gender/$slug" params={{ gender, slug: c.slug }} className="group">
-            <div className="aspect-square overflow-hidden bg-muted">
-              <img src={CAT_IMG[c.slug] || "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&q=80"} alt={c.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-            </div>
-            <div className="text-sm mt-3 text-center">{c.name}</div>
-          </Link>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 function Section({ title, subtitle, link, linkLabel, children }: { title: string; subtitle?: string; link?: string; linkLabel?: string; children: React.ReactNode }) {
   return (
