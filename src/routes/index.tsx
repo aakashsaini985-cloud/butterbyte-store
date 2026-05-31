@@ -73,23 +73,34 @@ function Home() {
         <Hero banners={data?.banners ?? []} />
         <TrustBar />
         <ShopByGender />
-        <CategoryGrid title="Shop Women by Category" gender="women" cats={WOMEN_CATEGORIES} />
-        <Section title="New Arrivals" subtitle="Fresh drops, hand-picked for the season" link="/categories" linkLabel="See all new">
-          <ProductRow items={data?.newArrivals ?? []} />
+        <Section title="New Arrivals" subtitle="Fresh women's tops, hand-picked for the season" link="/women" linkLabel="See more">
+          <ProductRow items={data?.womenTops ?? []} />
+          <SeeMore to="/women" label="See more women's categories" />
         </Section>
         <BannerStrip />
-        <Section title="Bestsellers" subtitle="Loved by thousands across India" link="/shop" linkLabel="Shop bestsellers">
-          <ProductRow items={data?.bestSellers ?? []} />
+        <Section title="Men's New Arrivals" subtitle="The latest drops for him">
+          <ProductRow items={data?.menNewArrivals ?? []} />
+          <SeeMore to="/men" label="See more men's categories" />
         </Section>
-        <CategoryGrid title="Shop Men by Category" gender="men" cats={MEN_CATEGORIES} />
-        <Section title="Trending Now" subtitle="What the country is wearing this week" link="/shop" linkLabel="View all">
-          <ProductRow items={data?.trending ?? []} />
+        <Section title="Men's Best Sellers" subtitle="Loved by thousands across India">
+          <ProductRow items={data?.menBestSellers ?? []} />
+          <SeeMore to="/men" label="See more men's categories" />
         </Section>
         <Reviews />
         <BrandStory />
         <Newsletter />
       </main>
       <Footer />
+    </div>
+  );
+}
+
+function SeeMore({ to, label }: { to: string; label: string }) {
+  return (
+    <div className="mt-10 flex justify-center">
+      <Link to={to} className="group inline-flex items-center gap-2 border border-foreground/80 text-foreground px-7 py-3.5 text-xs uppercase tracking-[0.25em] hover:bg-foreground hover:text-background transition">
+        {label} <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+      </Link>
     </div>
   );
 }
