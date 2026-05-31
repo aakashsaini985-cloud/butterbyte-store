@@ -74,7 +74,7 @@ function Home() {
         <TrustBar />
         <ShopByGender />
         <Section title="New Arrivals" subtitle="Fresh women's tops, hand-picked for the season" link="/c/women/dress" linkLabel="See more">
-          <WomenPreviewRow items={data?.womenTops ?? []} />
+          <ProductRow items={data?.womenTops ?? []} />
           <SeeMore to="/c/women/dress" label="See more women's categories" />
         </Section>
         <BannerStrip />
