@@ -269,7 +269,7 @@ function TrustBar() {
 
 function ShopByGender() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-16 grid md:grid-cols-2 gap-6">
+    <section className="mx-auto max-w-7xl px-5 md:px-6 py-10 md:py-16 grid md:grid-cols-2 gap-6">
       {[
         { to: "/women", title: "Women", img: shopWomenEthnic },
         { to: "/men", title: "Men", img: shopMenEthnic },
@@ -290,7 +290,7 @@ function ShopByGender() {
 
 function CategoryGrid({ title, gender, cats }: { title: string; gender: "men" | "women"; cats: { slug: string; name: string }[] }) {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-16">
+    <section className="mx-auto max-w-7xl px-6 py-10 md:py-16">
       <div className="mb-8 flex items-end justify-between">
         <h2 className="font-display text-3xl md:text-4xl">{title}</h2>
         <Link to={`/${gender}`} className="text-xs uppercase tracking-[0.2em] gold-underline">View all</Link>
@@ -311,7 +311,7 @@ function CategoryGrid({ title, gender, cats }: { title: string; gender: "men" | 
 
 function Section({ title, subtitle, link, linkLabel, children }: { title: string; subtitle?: string; link?: string; linkLabel?: string; children: React.ReactNode }) {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-16">
+    <section className="mx-auto max-w-7xl px-6 py-10 md:py-16">
       <div className="mb-8 flex items-end justify-between gap-4">
         <div>
           <h2 className="font-display text-3xl md:text-4xl">{title}</h2>
