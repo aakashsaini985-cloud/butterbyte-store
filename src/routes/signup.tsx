@@ -44,8 +44,8 @@ function SignupPage() {
     });
     setBusy(false);
     if (error) return toast.error(error.message);
-    toast.success("Account created! Please check your email to confirm, then sign in.");
-    navigate({ to: "/login", search: { redirect } as any });
+    toast.success("Welcome to BUTTERBYTE STORE!");
+    navigate({ to: (redirect as any) || "/account" });
   };
 
   return (
