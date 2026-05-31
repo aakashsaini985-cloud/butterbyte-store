@@ -31,15 +31,51 @@ export const createOrder = createServerFn({ method: "POST" })
       .object({
         items: z.array(OrderItemSchema).min(1).max(50),
         address: AddressSchema,
-        subtotal: z.number().nonnegative(),
-        shipping: z.number().nonnegative(),
-        total: z.number().nonnegative(),
         payment_method: z.string().max(50).default("cod"),
       })
       .parse(input),
   )
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
+
+    // Server-authoritative pricing — never trust client-supplied prices.
+    // Every item must reference a real product; fetch the current selling_price
+    // from the database and recompute subtotal, shipping, and total here.
+    const productIds = Array.from(
+      new Set(data.items.map((i) => i.product_id).filter((v): v is string => !!v)),
+    );
+    if (productIds.length === 0) throw new Error("Invalid cart: missing product references");
+
+    const { data: dbProducts, error: prodErr } = await supabaseAdmin
+      .from("products")
+      .select("id, name, selling_price")
+      .in("id", productIds);
+    if (prodErr) throw new Error(prodErr.message);
+
+    const priceMap = new Map((dbProducts ?? []).map((p) => [p.id, p]));
+
+    const pricedItems = data.items.map((it) => {
+      if (!it.product_id) throw new Error(`Invalid cart item: ${it.name}`);
+      const p = priceMap.get(it.product_id);
+      if (!p) throw new Error(`Product no longer available: ${it.name}`);
+      const unitPrice = Number(p.selling_price);
+      if (!Number.isFinite(unitPrice) || unitPrice < 0) {
+        throw new Error(`Invalid price for product: ${p.name}`);
+      }
+      return {
+        product_id: it.product_id,
+        name: p.name,
+        sku: it.sku ?? null,
+        price: unitPrice,
+        qty: it.qty,
+        image_url: it.image_url ?? null,
+      };
+    });
+
+    const subtotal = pricedItems.reduce((s, l) => s + l.price * l.qty, 0);
+    const shipping = subtotal >= 999 || subtotal === 0 ? 0 : 79;
+    const total = subtotal + shipping;
+
     const order_no = "BB" + Date.now().toString().slice(-8);
 
     const { data: order, error } = await supabase
@@ -47,10 +83,10 @@ export const createOrder = createServerFn({ method: "POST" })
       .insert({
         user_id: userId,
         order_no,
-        subtotal: data.subtotal,
+        subtotal,
         discount: 0,
-        shipping: data.shipping,
-        total: data.total,
+        shipping,
+        total,
         status: "pending",
         payment_method: data.payment_method,
         address_snapshot: data.address,
@@ -60,19 +96,12 @@ export const createOrder = createServerFn({ method: "POST" })
     if (error || !order) throw new Error(error?.message || "Failed to create order");
 
     const { error: itemsErr } = await supabase.from("order_items").insert(
-      data.items.map((it) => ({
-        order_id: order.id,
-        product_id: it.product_id ?? null,
-        name: it.name,
-        sku: it.sku ?? null,
-        price: it.price,
-        qty: it.qty,
-        image_url: it.image_url ?? null,
-      })),
+      pricedItems.map((it) => ({ order_id: order.id, ...it })),
     );
     if (itemsErr) throw new Error(itemsErr.message);
 
     return { order_no: order.order_no, id: order.id };
+
   });
 
 export const getMyOrders = createServerFn({ method: "GET" })
