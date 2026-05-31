@@ -1,12 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { motion } from "framer-motion";
-import { ArrowRight, Truck, ShieldCheck, RefreshCw, Sparkles } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import { ArrowRight, Truck, ShieldCheck, RefreshCw, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { ProductCard } from "@/components/product-card";
 import { getHomeData } from "@/lib/catalog.functions";
 import { WOMEN_CATEGORIES, MEN_CATEGORIES, SITE } from "@/lib/site";
+import heroMen from "@/assets/hero-men.jpg";
+import heroWomen from "@/assets/hero-women.jpg";
+import heroCollection from "@/assets/hero-collection.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -71,39 +75,150 @@ function Home() {
   );
 }
 
-function Hero({ banners }: { banners: any[] }) {
-  const b = banners[0] ?? {
-    title: "Edit of the Season",
-    subtitle: "Hand-picked silhouettes in muted tones.",
-    cta_label: "Shop Women",
-    cta_href: "/women",
-    image_url: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1920&q=80",
-  };
+type Slide = {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  image: string;
+  align: "left" | "right" | "center";
+  primary: { label: string; href: string };
+  secondary: { label: string; href: string };
+};
+
+const HERO_SLIDES: Slide[] = [
+  {
+    eyebrow: "Autumn / Winter ’26",
+    title: "The Heirloom Edit",
+    subtitle: "Hand-embroidered silhouettes for the modern woman.",
+    image: heroWomen,
+    align: "right",
+    primary: { label: "Shop Women", href: "/women" },
+    secondary: { label: "Explore Collection", href: "/shop" },
+  },
+  {
+    eyebrow: "Sharp Tailoring",
+    title: "Defined By Detail",
+    subtitle: "Sherwanis, suits and shirts crafted in India.",
+    image: heroMen,
+    align: "left",
+    primary: { label: "Shop Men", href: "/men" },
+    secondary: { label: "Explore Collection", href: "/shop" },
+  },
+  {
+    eyebrow: "The New Campaign",
+    title: "Together, Refined.",
+    subtitle: "A collection designed to be worn side by side.",
+    image: heroCollection,
+    align: "center",
+    primary: { label: "Shop Women", href: "/women" },
+    secondary: { label: "Shop Men", href: "/men" },
+  },
+];
+
+function Hero({ banners: _banners }: { banners: any[] }) {
+  const [i, setI] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const n = HERO_SLIDES.length;
+
+  useEffect(() => {
+    if (paused) return;
+    const t = setInterval(() => setI((p) => (p + 1) % n), 6000);
+    return () => clearInterval(t);
+  }, [paused, n]);
+
+  const s = HERO_SLIDES[i];
+  const go = (d: number) => setI((p) => (p + d + n) % n);
+  const alignCls =
+    s.align === "right"
+      ? "items-end text-right"
+      : s.align === "center"
+      ? "items-center text-center"
+      : "items-start text-left";
+
   return (
-    <section className="relative h-[80vh] min-h-[520px] w-full overflow-hidden bg-black">
-      <motion.img
-        initial={{ scale: 1.08 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 8, ease: "easeOut" }}
-        src={b.image_url}
-        alt={b.title}
-        className="absolute inset-0 w-full h-full object-cover opacity-80"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-      <div className="relative h-full mx-auto max-w-7xl px-6 flex flex-col justify-end pb-16 md:pb-24 text-white">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-          <div className="text-[11px] tracking-[0.3em] uppercase mb-4 text-[oklch(0.85_0.12_85)]">Autumn / Winter ’26</div>
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[0.95] max-w-3xl">{b.title}</h1>
-          <p className="mt-4 text-base md:text-lg text-white/80 max-w-xl">{b.subtitle}</p>
-          <div className="mt-8 flex gap-3">
-            <Link to={b.cta_href || "/shop"} className="inline-flex items-center gap-2 bg-white text-black px-6 py-3 text-sm uppercase tracking-[0.2em] hover:bg-[oklch(0.85_0.12_85)] transition">
-              {b.cta_label || "Shop now"} <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link to="/men" className="inline-flex items-center gap-2 border border-white/40 text-white px-6 py-3 text-sm uppercase tracking-[0.2em] hover:bg-white hover:text-black transition">
-              Shop Men
-            </Link>
-          </div>
+    <section
+      className="relative h-[88vh] min-h-[560px] w-full overflow-hidden bg-black"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      aria-roledescription="carousel"
+    >
+      <AnimatePresence mode="sync">
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, scale: 1.08 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ opacity: { duration: 1.1, ease: "easeInOut" }, scale: { duration: 7, ease: "easeOut" } }}
+          className="absolute inset-0"
+        >
+          <img src={s.image} alt={s.title} className="absolute inset-0 w-full h-full object-cover" width={1920} height={1080} />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
         </motion.div>
+      </AnimatePresence>
+
+      <div className={`relative h-full mx-auto max-w-7xl px-6 flex flex-col justify-end pb-20 md:pb-28 text-white`}>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className={`flex flex-col ${alignCls} max-w-2xl ${s.align === "right" ? "ml-auto" : s.align === "center" ? "mx-auto" : ""}`}
+          >
+            <div className="text-[11px] tracking-[0.35em] uppercase mb-4 text-[oklch(0.85_0.12_85)]">{s.eyebrow}</div>
+            <h1 className="font-display text-5xl md:text-7xl lg:text-[5.5rem] leading-[0.95] tracking-tight">{s.title}</h1>
+            <p className="mt-5 text-base md:text-lg text-white/85 max-w-xl">{s.subtitle}</p>
+            <div className={`mt-9 flex flex-wrap gap-3 ${s.align === "center" ? "justify-center" : s.align === "right" ? "justify-end" : ""}`}>
+              <Link to={s.primary.href} className="group inline-flex items-center gap-2 bg-white text-black px-7 py-3.5 text-xs uppercase tracking-[0.25em] hover:bg-[oklch(0.85_0.12_85)] transition">
+                {s.primary.label} <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link to={s.secondary.href} className="inline-flex items-center gap-2 border border-white/50 text-white px-7 py-3.5 text-xs uppercase tracking-[0.25em] hover:bg-white hover:text-black transition backdrop-blur-sm">
+                {s.secondary.label}
+              </Link>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Arrows */}
+      <button
+        onClick={() => go(-1)}
+        aria-label="Previous slide"
+        className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 h-12 w-12 items-center justify-center border border-white/30 text-white hover:bg-white hover:text-black transition backdrop-blur-sm"
+      >
+        <ChevronLeft className="h-5 w-5" />
+      </button>
+      <button
+        onClick={() => go(1)}
+        aria-label="Next slide"
+        className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 h-12 w-12 items-center justify-center border border-white/30 text-white hover:bg-white hover:text-black transition backdrop-blur-sm"
+      >
+        <ChevronRight className="h-5 w-5" />
+      </button>
+
+      {/* Dots + progress */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3">
+        {HERO_SLIDES.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setI(idx)}
+            aria-label={`Slide ${idx + 1}`}
+            className="relative h-[2px] w-10 bg-white/30 overflow-hidden"
+          >
+            {idx === i && (
+              <motion.span
+                key={`${i}-${paused}`}
+                initial={{ width: "0%" }}
+                animate={{ width: paused ? "0%" : "100%" }}
+                transition={{ duration: paused ? 0 : 6, ease: "linear" }}
+                className="absolute inset-y-0 left-0 bg-[oklch(0.85_0.12_85)]"
+              />
+            )}
+            {idx !== i && <span className="absolute inset-0 bg-transparent" />}
+          </button>
+        ))}
       </div>
     </section>
   );
