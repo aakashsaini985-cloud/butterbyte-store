@@ -64,8 +64,8 @@ function CategoryPage() {
   const current = cats.find((c) => c.slug === slug);
 
   const sort: Sort = search.sort ?? "featured";
-  const selectedSizes = search.sizes ?? [];
-  const selectedColors = search.colors ?? [];
+  const selectedSizes: string[] = search.sizes ?? [];
+  const selectedColors: string[] = search.colors ?? [];
 
   const [mobileOpen, setMobileOpen] = useState(false);
 
