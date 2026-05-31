@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Heart, ShoppingBag, Search, Menu, User } from "lucide-react";
+import { Heart, ShoppingBag, Search, Menu, User, ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useStore } from "@/lib/store";
 import { WOMEN_CATEGORIES, MEN_CATEGORIES, SITE } from "@/lib/site";
@@ -19,41 +19,34 @@ export function Header() {
 
   return (
     <>
-      <div className="bg-black text-[11px] tracking-[0.2em] uppercase text-white/90 py-2 text-center">
-        Free shipping on prepaid orders above ₹999 &nbsp;·&nbsp; COD available &nbsp;·&nbsp; 7-day easy returns
+      <div className="bg-black text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-white/90 py-2 text-center px-3">
+        Free shipping on prepaid orders above ₹999 · 7-day returns
       </div>
       <header className={`sticky top-0 z-40 bg-background transition-shadow ${scrolled ? "shadow-[0_1px_0_var(--border)]" : ""}`}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 md:h-20">
-            <div className="flex items-center gap-3 md:hidden">
+          <div className="flex items-center justify-between h-14 md:h-16 gap-3">
+            <div className="flex items-center gap-2 md:gap-4">
               <Sheet>
-                <SheetTrigger aria-label="Open menu"><Menu className="h-5 w-5" /></SheetTrigger>
-                <SheetContent side="left" className="w-[300px]">
-                  <MobileNav />
+                <SheetTrigger aria-label="Open menu" className="p-1 -ml-1 hover:text-[oklch(0.78_0.13_85)] transition">
+                  <Menu className="h-6 w-6" />
+                </SheetTrigger>
+                <SheetContent side="left" className="w-[320px] sm:w-[360px] overflow-y-auto p-0">
+                  <SidebarNav />
                 </SheetContent>
               </Sheet>
+              <Link to="/" className="font-display font-bold text-lg md:text-xl tracking-tight">
+                {SITE.brand}
+              </Link>
             </div>
 
-            <Link to="/" className="font-display text-2xl md:text-3xl tracking-tight">
-              {SITE.brand}
-            </Link>
-
-            <nav className="hidden md:flex items-center gap-8 text-sm uppercase tracking-[0.15em]">
-              <Link to="/women" className="gold-underline">Women</Link>
-              <Link to="/men" className="gold-underline">Men</Link>
-              <Link to="/shop" search={{ filter: "new" } as any} className="gold-underline">New</Link>
-              <Link to="/shop" search={{ filter: "bestsellers" } as any} className="gold-underline">Bestsellers</Link>
-              <Link to="/shop" search={{ filter: "sale" } as any} className="gold-underline text-[oklch(0.78_0.13_85)]">Sale</Link>
-            </nav>
-
-            <div className="flex items-center gap-3 md:gap-5">
-              <button onClick={() => setOpenSearch(true)} aria-label="Search" className="p-1"><Search className="h-5 w-5" /></button>
-              <Link to="/account" aria-label="Account" className="p-1 hidden sm:block"><User className="h-5 w-5" /></Link>
-              <Link to="/wishlist" aria-label="Wishlist" className="p-1 relative">
+            <div className="flex items-center gap-3 md:gap-4">
+              <button onClick={() => setOpenSearch(true)} aria-label="Search" className="p-1 hover:text-[oklch(0.78_0.13_85)] transition"><Search className="h-5 w-5" /></button>
+              <Link to="/account" aria-label="Account" className="p-1 hidden sm:block hover:text-[oklch(0.78_0.13_85)] transition"><User className="h-5 w-5" /></Link>
+              <Link to="/wishlist" aria-label="Wishlist" className="p-1 relative hover:text-[oklch(0.78_0.13_85)] transition">
                 <Heart className="h-5 w-5" />
                 {wishCount > 0 && <Badge n={wishCount} />}
               </Link>
-              <Link to="/cart" aria-label="Cart" className="p-1 relative">
+              <Link to="/cart" aria-label="Cart" className="p-1 relative hover:text-[oklch(0.78_0.13_85)] transition">
                 <ShoppingBag className="h-5 w-5" />
                 {cartCount > 0 && <Badge n={cartCount} />}
               </Link>
@@ -72,33 +65,54 @@ function Badge({ n }: { n: number }) {
   );
 }
 
-function MobileNav() {
+function SidebarNav() {
+  const [openMen, setOpenMen] = useState(false);
+  const [openWomen, setOpenWomen] = useState(false);
+  const linkCls = "block py-2.5 text-sm hover:text-[oklch(0.65_0.15_85)] hover:underline underline-offset-4 decoration-[oklch(0.78_0.13_85)] decoration-2 transition";
   return (
-    <div className="pt-4">
-      <div className="font-display text-2xl mb-6">{SITE.brand}</div>
-      <div className="space-y-6">
-        <div>
-          <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-2">Women</div>
-          <div className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
-            {WOMEN_CATEGORIES.map((c) => (
-              <Link key={c.slug} to="/c/$gender/$slug" params={{ gender: "women", slug: c.slug }}>{c.name}</Link>
-            ))}
-          </div>
-        </div>
-        <div>
-          <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-2">Men</div>
-          <div className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
+    <div className="flex flex-col h-full">
+      <div className="px-6 pt-8 pb-4 border-b">
+        <div className="font-display font-bold text-xl">{SITE.brand}</div>
+        <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mt-1">Modern Indian Fashion</div>
+      </div>
+      <nav className="px-6 py-4 flex-1">
+        <Link to="/" className={linkCls}>Home</Link>
+        <Link to="/shop" className={linkCls}>Shop</Link>
+
+        <button onClick={() => setOpenMen((v) => !v)} className={`${linkCls} flex items-center justify-between w-full`}>
+          <span>Men</span><ChevronDown className={`h-4 w-4 transition-transform ${openMen ? "rotate-180" : ""}`} />
+        </button>
+        {openMen && (
+          <div className="pl-4 border-l border-border ml-1 mb-2">
             {MEN_CATEGORIES.map((c) => (
-              <Link key={c.slug} to="/c/$gender/$slug" params={{ gender: "men", slug: c.slug }}>{c.name}</Link>
+              <Link key={c.slug} to="/c/$gender/$slug" params={{ gender: "men", slug: c.slug }} className="block py-1.5 text-sm text-muted-foreground hover:text-[oklch(0.65_0.15_85)] transition">{c.name}</Link>
             ))}
           </div>
-        </div>
-        <div className="border-t pt-4 space-y-2 text-sm">
-          <Link to="/account" className="block">Account</Link>
-          <Link to="/wishlist" className="block">Wishlist</Link>
-          <Link to="/track-order" className="block">Track Order</Link>
-          <Link to="/contact" className="block">Contact</Link>
-        </div>
+        )}
+
+        <button onClick={() => setOpenWomen((v) => !v)} className={`${linkCls} flex items-center justify-between w-full`}>
+          <span>Women</span><ChevronDown className={`h-4 w-4 transition-transform ${openWomen ? "rotate-180" : ""}`} />
+        </button>
+        {openWomen && (
+          <div className="pl-4 border-l border-border ml-1 mb-2">
+            {WOMEN_CATEGORIES.map((c) => (
+              <Link key={c.slug} to="/c/$gender/$slug" params={{ gender: "women", slug: c.slug }} className="block py-1.5 text-sm text-muted-foreground hover:text-[oklch(0.65_0.15_85)] transition">{c.name}</Link>
+            ))}
+          </div>
+        )}
+
+        <Link to="/shop" search={{ filter: "bestsellers" } as any} className={linkCls}>Best Sellers</Link>
+        <Link to="/shop" search={{ filter: "sale" } as any} className={`${linkCls} text-[oklch(0.65_0.18_30)]`}>Sale</Link>
+        <div className="my-3 border-t" />
+        <Link to="/about" className={linkCls}>About Us</Link>
+        <Link to="/contact" className={linkCls}>Contact Us</Link>
+        <Link to="/track-order" className={linkCls}>Track Order</Link>
+        <Link to="/faq" className={linkCls}>FAQs</Link>
+        <Link to="/account" className={linkCls}>My Account</Link>
+      </nav>
+      <div className="px-6 py-4 border-t text-xs text-muted-foreground">
+        <div>{SITE.email}</div>
+        <div>{SITE.phone}</div>
       </div>
     </div>
   );
