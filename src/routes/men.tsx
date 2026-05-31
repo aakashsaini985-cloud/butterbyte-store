@@ -24,6 +24,7 @@ function Men() {
             <Link key={c.slug} to="/c/$gender/$slug" params={{ gender: "men", slug: c.slug }} className="shrink-0 px-4 py-2 text-xs uppercase tracking-[0.18em] border hover:bg-black hover:text-white transition">{c.name}</Link>
           ))}
         </div>
+
         {isLoading ? (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">{Array.from({ length: 8 }).map((_, i) => <div key={i} className="aspect-[3/4] bg-muted animate-pulse" />)}</div>
         ) : (
