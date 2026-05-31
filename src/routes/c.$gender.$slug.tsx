@@ -32,6 +32,11 @@ function CategoryPage() {
   const [sort, setSort] = useState<Sort>("featured");
   const [maxPrice, setMaxPrice] = useState<number>(10000);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
+
+  const toggle = (list: string[], v: string) =>
+    list.includes(v) ? list.filter((x) => x !== v) : [...list, v];
 
   const products = data?.products ?? [];
   const priceCeiling = useMemo(() => {
@@ -41,13 +46,22 @@ function CategoryPage() {
 
   const filtered = useMemo(() => {
     let arr = products.filter((p) => p.selling_price <= maxPrice);
+    if (selectedSizes.length) {
+      arr = arr.filter((p) => p.sizes?.some((s) => selectedSizes.includes(s)));
+    }
+    if (selectedColors.length) {
+      arr = arr.filter((p) => {
+        const hay = p.name.toLowerCase();
+        return selectedColors.some((c) => hay.includes(c.toLowerCase()));
+      });
+    }
     switch (sort) {
       case "price_asc": arr = [...arr].sort((a, b) => a.selling_price - b.selling_price); break;
       case "price_desc": arr = [...arr].sort((a, b) => b.selling_price - a.selling_price); break;
       case "rating": arr = [...arr].sort((a, b) => b.rating_avg - a.rating_avg); break;
     }
     return arr;
-  }, [products, sort, maxPrice]);
+  }, [products, sort, maxPrice, selectedSizes, selectedColors]);
 
   const cap = priceCeiling || 10000;
   const effectiveMax = Math.min(maxPrice, cap);
