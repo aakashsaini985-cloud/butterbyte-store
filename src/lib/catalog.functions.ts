@@ -83,7 +83,7 @@ export const listProducts = createServerFn({ method: "GET" })
   }) => d)
   .handler(async ({ data }) => {
     const sb = publicClient();
-    let q = sb.from("products").select("*, product_images(url), categories(slug,name,gender)", { count: "exact" });
+    let q = sb.from("products").select("*, product_images(url), product_variants(size,stock_qty), categories(slug,name,gender)", { count: "exact" });
     if (data.categorySlug) {
       const { data: cat } = await sb.from("categories").select("id").eq("slug", data.categorySlug).maybeSingle();
       if (cat) q = q.eq("category_id", cat.id);
