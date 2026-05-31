@@ -119,5 +119,19 @@ export const trackOrder = createServerFn({ method: "POST" })
       .select("name, qty, price, image_url")
       .eq("order_id", order.id);
 
-    return { order, items: items ?? [] };
+    // Return only minimum required fields — do NOT expose full address_snapshot
+    // (name, phone, address lines) to unauthenticated callers.
+    const city = typeof snap.city === "string" ? snap.city : "";
+    const state = typeof snap.state === "string" ? snap.state : "";
+    const safeOrder = {
+      order_no: order.order_no,
+      status: order.status,
+      created_at: order.created_at,
+      total: order.total,
+      subtotal: order.subtotal,
+      shipping: order.shipping,
+      ship_to: [city, state].filter(Boolean).join(", "),
+    };
+
+    return { order: safeOrder, items: items ?? [] };
   });
