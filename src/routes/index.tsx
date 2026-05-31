@@ -7,7 +7,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { ProductCard } from "@/components/product-card";
 import { getHomeData } from "@/lib/catalog.functions";
-import { WOMEN_CATEGORIES, MEN_CATEGORIES, SITE } from "@/lib/site";
+import { SITE } from "@/lib/site";
 import heroMen from "@/assets/hero-men.jpg";
 import heroWomen from "@/assets/hero-women.jpg";
 import heroCollection from "@/assets/hero-collection.jpg";
