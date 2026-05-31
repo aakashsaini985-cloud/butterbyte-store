@@ -114,7 +114,7 @@ function CategoryPage() {
         <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3">
           <Link to={`/${gender}`} className="hover:text-foreground">{gender}</Link> · {current?.name ?? slug}
         </div>
-        <h1 className="font-display text-3xl md:text-5xl mb-1">{current?.name ?? slug.replace(/-/g, " ")}</h1>
+        <h1 className="font-display text-2xl md:text-5xl mb-1">{current?.name ?? slug.replace(/-/g, " ")}</h1>
         <p className="text-sm text-muted-foreground mb-6">{filtered.length} products</p>
 
         <div className="flex items-center justify-between gap-3 mb-6 border-y py-3">
@@ -138,7 +138,7 @@ function CategoryPage() {
             ) : filtered.length === 0 ? (
               <div className="py-20 text-center text-muted-foreground">No products match your filters.</div>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-10">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-x-3 sm:gap-x-4 gap-y-8 md:gap-y-10">
                 {filtered.map((p) => <ProductCard key={p.id} p={p} />)}
               </div>
             )}

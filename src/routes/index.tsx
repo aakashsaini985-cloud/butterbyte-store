@@ -156,7 +156,7 @@ function Hero({ banners: _banners }: { banners: any[] }) {
 
   return (
     <section
-      className="relative h-[88vh] min-h-[560px] w-full overflow-hidden bg-black"
+      className="relative h-[70vh] min-h-[460px] md:h-[88vh] md:min-h-[560px] w-full overflow-hidden bg-black"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       aria-roledescription="carousel"
@@ -176,7 +176,7 @@ function Hero({ banners: _banners }: { banners: any[] }) {
         </motion.div>
       </AnimatePresence>
 
-      <div className={`relative h-full mx-auto max-w-7xl px-6 flex flex-col justify-end pb-20 md:pb-28 text-white`}>
+      <div className={`relative h-full mx-auto max-w-7xl px-5 md:px-6 flex flex-col justify-end pb-14 md:pb-28 text-white`}>
         <AnimatePresence mode="wait">
           <motion.div
             key={i}
@@ -186,14 +186,14 @@ function Hero({ banners: _banners }: { banners: any[] }) {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className={`flex flex-col ${alignCls} max-w-2xl ${s.align === "right" ? "ml-auto" : s.align === "center" ? "mx-auto" : ""}`}
           >
-            <div className="text-[11px] tracking-[0.35em] uppercase mb-4 text-[oklch(0.85_0.12_85)]">{s.eyebrow}</div>
-            <h1 className="font-display text-5xl md:text-7xl lg:text-[5.5rem] leading-[0.95] tracking-tight">{s.title}</h1>
-            <p className="mt-5 text-base md:text-lg text-white/85 max-w-xl">{s.subtitle}</p>
-            <div className={`mt-9 flex flex-wrap gap-3 ${s.align === "center" ? "justify-center" : s.align === "right" ? "justify-end" : ""}`}>
-              <Link to={s.primary.href} className="group inline-flex items-center gap-2 bg-white text-black px-7 py-3.5 text-xs uppercase tracking-[0.25em] hover:bg-[oklch(0.85_0.12_85)] transition">
+            <div className="text-[10px] md:text-[11px] tracking-[0.3em] md:tracking-[0.35em] uppercase mb-3 md:mb-4 text-[oklch(0.85_0.12_85)]">{s.eyebrow}</div>
+            <h1 className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-[5.5rem] leading-[1] md:leading-[0.95] tracking-tight">{s.title}</h1>
+            <p className="mt-3 md:mt-5 text-sm md:text-lg text-white/85 max-w-xl">{s.subtitle}</p>
+            <div className={`mt-6 md:mt-9 flex flex-wrap gap-2.5 md:gap-3 ${s.align === "center" ? "justify-center" : s.align === "right" ? "justify-end" : ""}`}>
+              <Link to={s.primary.href} className="group inline-flex items-center gap-2 bg-white text-black px-5 md:px-7 py-3 md:py-3.5 text-[11px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.25em] hover:bg-[oklch(0.85_0.12_85)] transition">
                 {s.primary.label} <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link to={s.secondary.href} className="inline-flex items-center gap-2 border border-white/50 text-white px-7 py-3.5 text-xs uppercase tracking-[0.25em] hover:bg-white hover:text-black transition backdrop-blur-sm">
+              <Link to={s.secondary.href} className="inline-flex items-center gap-2 border border-white/50 text-white px-5 md:px-7 py-3 md:py-3.5 text-[11px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.25em] hover:bg-white hover:text-black transition backdrop-blur-sm">
                 {s.secondary.label}
               </Link>
             </div>
@@ -269,7 +269,7 @@ function TrustBar() {
 
 function ShopByGender() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-16 grid md:grid-cols-2 gap-6">
+    <section className="mx-auto max-w-7xl px-5 md:px-6 py-10 md:py-16 grid md:grid-cols-2 gap-6">
       {[
         { to: "/women", title: "Women", img: shopWomenEthnic },
         { to: "/men", title: "Men", img: shopMenEthnic },
@@ -279,7 +279,7 @@ function ShopByGender() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
             <div className="text-[10px] tracking-[0.3em] uppercase text-[oklch(0.85_0.12_85)]">Shop</div>
-            <div className="font-display text-5xl md:text-6xl">{c.title}</div>
+            <div className="font-display text-4xl md:text-6xl">{c.title}</div>
             <div className="mt-2 text-sm flex items-center gap-2 uppercase tracking-[0.2em]">Explore <ArrowRight className="h-4 w-4" /></div>
           </div>
         </Link>
@@ -290,9 +290,9 @@ function ShopByGender() {
 
 function CategoryGrid({ title, gender, cats }: { title: string; gender: "men" | "women"; cats: { slug: string; name: string }[] }) {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-16">
+    <section className="mx-auto max-w-7xl px-6 py-10 md:py-16">
       <div className="mb-8 flex items-end justify-between">
-        <h2 className="font-display text-3xl md:text-4xl">{title}</h2>
+        <h2 className="font-display text-2xl md:text-4xl">{title}</h2>
         <Link to={`/${gender}`} className="text-xs uppercase tracking-[0.2em] gold-underline">View all</Link>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -311,10 +311,10 @@ function CategoryGrid({ title, gender, cats }: { title: string; gender: "men" | 
 
 function Section({ title, subtitle, link, linkLabel, children }: { title: string; subtitle?: string; link?: string; linkLabel?: string; children: React.ReactNode }) {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-16">
+    <section className="mx-auto max-w-7xl px-6 py-10 md:py-16">
       <div className="mb-8 flex items-end justify-between gap-4">
         <div>
-          <h2 className="font-display text-3xl md:text-4xl">{title}</h2>
+          <h2 className="font-display text-2xl md:text-4xl">{title}</h2>
           {subtitle && <p className="text-sm text-muted-foreground mt-1">{subtitle}</p>}
         </div>
         {link && <Link to={link} className="text-xs uppercase tracking-[0.2em] gold-underline whitespace-nowrap">{linkLabel}</Link>}
@@ -327,7 +327,7 @@ function Section({ title, subtitle, link, linkLabel, children }: { title: string
 function ProductRow({ items }: { items: any[] }) {
   if (!items.length) return <div className="grid grid-cols-2 md:grid-cols-4 gap-4">{Array.from({ length: 4 }).map((_, i) => <div key={i} className="aspect-[3/4] bg-muted animate-pulse" />)}</div>;
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 sm:gap-x-4 gap-y-8 md:gap-y-10">
       {items.slice(0, 8).map((p) => <ProductCard key={p.id} p={p} />)}
     </div>
   );
@@ -341,7 +341,7 @@ function BannerStrip() {
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative h-full flex flex-col items-center justify-center text-white text-center px-6">
           <div className="text-[10px] tracking-[0.3em] uppercase text-[oklch(0.85_0.12_85)]">Limited time</div>
-          <div className="font-display text-4xl md:text-6xl mt-2">Mid-Season Sale · Up to 40% Off</div>
+          <div className="font-display text-3xl md:text-6xl mt-2">Mid-Season Sale · Up to 40% Off</div>
           <div className="mt-4 text-sm uppercase tracking-[0.2em] inline-flex items-center gap-2">Shop now <ArrowRight className="h-4 w-4" /></div>
         </div>
       </Link>
@@ -356,11 +356,11 @@ function Reviews() {
     { name: "Priya K.", city: "Delhi", text: "Premium quality at a fair price. Returns were quick when I sized up." },
   ];
   return (
-    <section className="bg-[oklch(0.97_0.01_85)] py-20 mt-16">
+    <section className="bg-[oklch(0.97_0.01_85)] py-12 md:py-20 mt-10 md:mt-16">
       <div className="mx-auto max-w-7xl px-6">
         <div className="text-center mb-12">
           <div className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">Loved by</div>
-          <h2 className="font-display text-3xl md:text-4xl mt-2">10,000+ happy customers</h2>
+          <h2 className="font-display text-2xl md:text-4xl mt-2">10,000+ happy customers</h2>
         </div>
         <div className="grid md:grid-cols-3 gap-6">
           {r.map((x) => (
@@ -378,13 +378,13 @@ function Reviews() {
 
 function BrandStory() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
+    <section className="mx-auto max-w-7xl px-6 py-12 md:py-20 grid md:grid-cols-2 gap-10 md:gap-12 items-center">
       <div className="aspect-[4/5] overflow-hidden bg-muted">
         <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1200&q=80" alt="Brand" className="w-full h-full object-cover" />
       </div>
       <div>
         <div className="text-[10px] tracking-[0.3em] uppercase text-[oklch(0.78_0.13_85)]">Our story</div>
-        <h2 className="font-display text-4xl md:text-5xl mt-3">Made in India. Made for you.</h2>
+        <h2 className="font-display text-3xl md:text-5xl mt-3">Made in India. Made for you.</h2>
         <p className="mt-6 text-foreground/70 leading-relaxed">
           {SITE.brand} is a Delhi-born fashion house obsessed with details — the weight of fabric, the fall of a hem, the way light catches embroidery at dusk. Every piece is designed to feel both modern and timeless.
         </p>
@@ -398,10 +398,10 @@ function BrandStory() {
 
 function Newsletter() {
   return (
-    <section className="bg-black text-white py-20">
+    <section className="bg-black text-white py-12 md:py-20">
       <div className="mx-auto max-w-3xl px-6 text-center">
         <div className="text-[10px] tracking-[0.3em] uppercase text-[oklch(0.85_0.12_85)]">Join the club</div>
-        <h2 className="font-display text-4xl md:text-5xl mt-3">Early access. Better prices.</h2>
+        <h2 className="font-display text-3xl md:text-5xl mt-3">Early access. Better prices.</h2>
         <p className="mt-3 text-white/70">Subscribe for first dibs on new drops, private sales and styling notes.</p>
         <form onSubmit={(e) => { e.preventDefault(); alert("Thanks — you're on the list!"); }} className="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
           <input required type="email" placeholder="you@email.com" className="flex-1 px-4 py-3 bg-white/10 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:border-[oklch(0.85_0.12_85)]" />

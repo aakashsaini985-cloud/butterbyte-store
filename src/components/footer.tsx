@@ -1,13 +1,14 @@
 import { Link } from "@tanstack/react-router";
 import { SITE, WOMEN_CATEGORIES, MEN_CATEGORIES } from "@/lib/site";
 import { Mail, Phone, MapPin, Instagram, Facebook } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
 
 export function Footer() {
   return (
-    <footer className="bg-black text-white/90 mt-24">
-      <div className="mx-auto max-w-7xl px-6 py-16 grid gap-10 md:grid-cols-5">
+    <footer className="bg-black text-white/90 mt-16 md:mt-24">
+      <div className="mx-auto max-w-7xl px-6 py-12 md:py-16 grid gap-10 md:grid-cols-5">
         <div className="md:col-span-2 space-y-4">
-          <div className="font-display text-3xl text-white">{SITE.brand}</div>
+          <BrandLogo variant="light" size="lg" asLink={false} />
           <p className="text-sm text-white/60 max-w-sm">{SITE.tagline}. By {SITE.company}. Designed in India, built for the world.</p>
           <div className="flex gap-3 pt-2">
             <a href="#" aria-label="Instagram" className="p-2 rounded-full border border-white/15 hover:border-[oklch(0.78_0.13_85)] hover:text-[oklch(0.78_0.13_85)] transition"><Instagram className="h-4 w-4" /></a>
