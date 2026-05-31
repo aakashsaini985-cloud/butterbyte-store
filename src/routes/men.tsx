@@ -19,6 +19,12 @@ function Men() {
       <main className="flex-1 mx-auto max-w-7xl px-6 py-10 w-full">
         <h1 className="font-display text-5xl md:text-6xl mb-2">Men</h1>
         <p className="text-muted-foreground mb-8">Sharp tailoring and easy essentials.</p>
+        <div className="flex gap-2 overflow-x-auto pb-3 mb-8 no-scrollbar">
+          {MEN_CATEGORIES.map((c) => (
+            <Link key={c.slug} to="/c/$gender/$slug" params={{ gender: "men", slug: c.slug }} className="shrink-0 px-4 py-2 text-xs uppercase tracking-[0.18em] border hover:bg-black hover:text-white transition">{c.name}</Link>
+          ))}
+        </div>
+
         {isLoading ? (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">{Array.from({ length: 8 }).map((_, i) => <div key={i} className="aspect-[3/4] bg-muted animate-pulse" />)}</div>
         ) : (
