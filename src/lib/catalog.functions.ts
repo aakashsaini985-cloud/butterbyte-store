@@ -25,6 +25,7 @@ export type ProductCard = {
   category_name: string | null;
   rating_avg: number;
   rating_count: number;
+  sizes: string[];
 };
 
 async function mapProducts(rows: any[]): Promise<ProductCard[]> {
@@ -41,6 +42,13 @@ async function mapProducts(rows: any[]): Promise<ProductCard[]> {
     category_name: r.categories?.name ?? null,
     rating_avg: Number(r.rating_avg),
     rating_count: r.rating_count,
+    sizes: Array.from(
+      new Set(
+        ((r.product_variants ?? []) as Array<{ size: string | null; stock_qty: number }>)
+          .filter((v) => v.size)
+          .map((v) => v.size as string),
+      ),
+    ),
   }));
 }
 
