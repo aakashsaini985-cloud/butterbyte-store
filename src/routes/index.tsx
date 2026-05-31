@@ -74,7 +74,7 @@ function Home() {
         <TrustBar />
         <ShopByGender />
         <CategoryGrid title="Shop Women by Category" gender="women" cats={WOMEN_CATEGORIES} />
-        <Section title="New Arrivals" subtitle="Fresh drops, hand-picked for the season" link="/shop" linkLabel="See all new">
+        <Section title="New Arrivals" subtitle="Fresh drops, hand-picked for the season" link="/categories" linkLabel="See all new">
           <ProductRow items={data?.newArrivals ?? []} />
         </Section>
         <BannerStrip />
