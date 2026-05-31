@@ -82,10 +82,6 @@ function Home() {
           <ProductRow items={data?.menNewArrivals ?? []} />
           <SeeMore to="/men" label="See more men's categories" />
         </Section>
-        <Section title="Men's Best Sellers" subtitle="Loved by thousands across India">
-          <ProductRow items={data?.menBestSellers ?? []} />
-          <SeeMore to="/men" label="See more men's categories" />
-        </Section>
         <Reviews />
         <BrandStory />
         <Newsletter />
