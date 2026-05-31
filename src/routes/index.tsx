@@ -11,6 +11,8 @@ import { WOMEN_CATEGORIES, MEN_CATEGORIES, SITE } from "@/lib/site";
 import heroMen from "@/assets/hero-men.jpg";
 import heroWomen from "@/assets/hero-women.jpg";
 import heroCollection from "@/assets/hero-collection.jpg";
+import shopWomenEthnic from "@/assets/shop-women-ethnic.jpg";
+import shopMenEthnic from "@/assets/shop-men-ethnic.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -252,8 +254,8 @@ function ShopByGender() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-16 grid md:grid-cols-2 gap-6">
       {[
-        { to: "/women", title: "Women", img: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=1200&q=80" },
-        { to: "/men", title: "Men", img: "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=1200&q=80" },
+        { to: "/women", title: "Women", img: shopWomenEthnic },
+        { to: "/men", title: "Men", img: shopMenEthnic },
       ].map((c) => (
         <Link key={c.to} to={c.to} className="group relative overflow-hidden aspect-[4/5] md:aspect-[5/6] block">
           <img src={c.img} alt={c.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
