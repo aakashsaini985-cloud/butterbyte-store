@@ -278,7 +278,7 @@ export type Database = {
           status: Database["public"]["Enums"]["order_status"]
           subtotal: number
           total: number
-          user_id: string | null
+          user_id: string
         }
         Insert: {
           address_snapshot: Json
@@ -291,7 +291,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["order_status"]
           subtotal: number
           total: number
-          user_id?: string | null
+          user_id: string
         }
         Update: {
           address_snapshot?: Json
@@ -304,7 +304,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["order_status"]
           subtotal?: number
           total?: number
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: []
       }
@@ -560,6 +560,16 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      validate_coupon: {
+        Args: { _code: string }
+        Returns: {
+          code: string
+          id: string
+          min_order: number
+          type: string
+          value: number
+        }[]
       }
     }
     Enums: {
