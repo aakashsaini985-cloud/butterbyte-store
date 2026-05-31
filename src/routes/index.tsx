@@ -320,6 +320,24 @@ function ProductRow({ items }: { items: any[] }) {
   );
 }
 
+function WomenPreviewRow({ items }: { items: any[] }) {
+  if (!items.length) return <div className="grid grid-cols-2 md:grid-cols-4 gap-4">{Array.from({ length: 4 }).map((_, i) => <div key={i} className="aspect-[3/4] bg-muted animate-pulse" />)}</div>;
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 sm:gap-x-4 gap-y-8 md:gap-y-10">
+      {items.slice(0, 8).map((p) => (
+        <Link key={p.id} to="/c/$gender/$slug" params={{ gender: "women", slug: "dress" }} className="block group">
+          <div className="aspect-[3/4] overflow-hidden bg-muted">
+            {p.image_url && <img src={p.image_url} alt={p.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />}
+          </div>
+          <div className="mt-3 text-xs uppercase tracking-[0.18em] text-muted-foreground">{p.category_name ?? "Tops"}</div>
+          <div className="text-sm mt-1 line-clamp-1">{p.name}</div>
+          <div className="text-sm mt-1">₹{Number(p.selling_price).toLocaleString("en-IN")}</div>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
 function BannerStrip() {
   return (
     <section className="mx-auto max-w-7xl px-6">
