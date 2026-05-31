@@ -327,7 +327,7 @@ function Section({ title, subtitle, link, linkLabel, children }: { title: string
 function ProductRow({ items }: { items: any[] }) {
   if (!items.length) return <div className="grid grid-cols-2 md:grid-cols-4 gap-4">{Array.from({ length: 4 }).map((_, i) => <div key={i} className="aspect-[3/4] bg-muted animate-pulse" />)}</div>;
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 sm:gap-x-4 gap-y-8 md:gap-y-10">
       {items.slice(0, 8).map((p) => <ProductCard key={p.id} p={p} />)}
     </div>
   );
