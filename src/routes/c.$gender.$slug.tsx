@@ -32,6 +32,11 @@ function CategoryPage() {
   const [sort, setSort] = useState<Sort>("featured");
   const [maxPrice, setMaxPrice] = useState<number>(10000);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
+
+  const toggle = (list: string[], v: string) =>
+    list.includes(v) ? list.filter((x) => x !== v) : [...list, v];
 
   const products = data?.products ?? [];
   const priceCeiling = useMemo(() => {
@@ -41,13 +46,22 @@ function CategoryPage() {
 
   const filtered = useMemo(() => {
     let arr = products.filter((p) => p.selling_price <= maxPrice);
+    if (selectedSizes.length) {
+      arr = arr.filter((p) => p.sizes?.some((s) => selectedSizes.includes(s)));
+    }
+    if (selectedColors.length) {
+      arr = arr.filter((p) => {
+        const hay = p.name.toLowerCase();
+        return selectedColors.some((c) => hay.includes(c.toLowerCase()));
+      });
+    }
     switch (sort) {
       case "price_asc": arr = [...arr].sort((a, b) => a.selling_price - b.selling_price); break;
       case "price_desc": arr = [...arr].sort((a, b) => b.selling_price - a.selling_price); break;
       case "rating": arr = [...arr].sort((a, b) => b.rating_avg - a.rating_avg); break;
     }
     return arr;
-  }, [products, sort, maxPrice]);
+  }, [products, sort, maxPrice, selectedSizes, selectedColors]);
 
   const cap = priceCeiling || 10000;
   const effectiveMax = Math.min(maxPrice, cap);
@@ -85,23 +99,55 @@ function CategoryPage() {
         </div>
       </div>
       <div>
-        <div className="text-xs uppercase tracking-[0.2em] mb-3 font-medium">Size</div>
+        <div className="flex items-center justify-between mb-3">
+          <div className="text-xs uppercase tracking-[0.2em] font-medium">Size</div>
+          {selectedSizes.length > 0 && (
+            <button type="button" onClick={() => setSelectedSizes([])} className="text-[10px] uppercase tracking-wider text-muted-foreground hover:text-foreground">Clear</button>
+          )}
+        </div>
         <div className="flex flex-wrap gap-2">
-          {["XS", "S", "M", "L", "XL", "XXL"].map((s) => (
-            <button key={s} className="h-9 min-w-9 px-2 border text-xs hover:border-foreground transition">{s}</button>
-          ))}
+          {["XS", "S", "M", "L", "XL", "XXL"].map((s) => {
+            const active = selectedSizes.includes(s);
+            return (
+              <button
+                key={s}
+                type="button"
+                onClick={() => setSelectedSizes((prev) => toggle(prev, s))}
+                className={`h-9 min-w-9 px-2 border text-xs transition ${active ? "bg-foreground text-background border-foreground" : "hover:border-foreground"}`}
+              >
+                {s}
+              </button>
+            );
+          })}
         </div>
       </div>
       <div>
-        <div className="text-xs uppercase tracking-[0.2em] mb-3 font-medium">Color</div>
+        <div className="flex items-center justify-between mb-3">
+          <div className="text-xs uppercase tracking-[0.2em] font-medium">Color</div>
+          {selectedColors.length > 0 && (
+            <button type="button" onClick={() => setSelectedColors([])} className="text-[10px] uppercase tracking-wider text-muted-foreground hover:text-foreground">Clear</button>
+          )}
+        </div>
         <div className="flex flex-wrap gap-2">
           {[
             ["Black", "#000"], ["White", "#fff"], ["Beige", "#d6c9b3"],
             ["Navy", "#0a1d3a"], ["Red", "#a01c1c"], ["Olive", "#5a6b3a"],
             ["Pink", "#e8a8b8"], ["Gold", "#c9a84c"],
-          ].map(([n, c]) => (
-            <button key={n} aria-label={n} title={n} className="h-7 w-7 rounded-full border border-border ring-1 ring-inset ring-black/5" style={{ background: c }} />
-          ))}
+          ].map(([n, c]) => {
+            const active = selectedColors.includes(n);
+            return (
+              <button
+                key={n}
+                type="button"
+                aria-label={n}
+                aria-pressed={active}
+                title={n}
+                onClick={() => setSelectedColors((prev) => toggle(prev, n))}
+                className={`h-7 w-7 rounded-full border transition ${active ? "ring-2 ring-offset-2 ring-foreground border-foreground" : "border-border ring-1 ring-inset ring-black/5"}`}
+                style={{ background: c }}
+              />
+            );
+          })}
         </div>
       </div>
     </div>
