@@ -74,7 +74,7 @@ function Home() {
         <TrustBar />
         <ShopByGender />
         <Section title="New Arrivals" subtitle="Fresh women's tops, hand-picked for the season" link="/c/women/dress" linkLabel="See more">
-          <WomenPreviewRow items={data?.womenTops ?? []} />
+          <ProductRow items={data?.womenTops ?? []} />
           <SeeMore to="/c/women/dress" label="See more women's categories" />
         </Section>
         <BannerStrip />
@@ -383,11 +383,48 @@ function Reviews() {
 
 function BrandStory() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-12 md:py-20 grid md:grid-cols-2 gap-10 md:gap-12 items-center">
-      <div className="aspect-[4/5] overflow-hidden bg-muted">
-        <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1200&q=80" alt="Brand" className="w-full h-full object-cover" />
-      </div>
-      <div>
+    <section className="mx-auto max-w-7xl px-5 md:px-6 py-12 md:py-24 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        className="relative"
+      >
+        <div className="relative aspect-[4/5] overflow-hidden bg-muted group">
+          <motion.img
+            src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=1400&q=85&auto=format&fit=crop"
+            alt="Artisan craftsmanship at BUTTERBYTE STORE"
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover"
+            initial={{ scale: 1.15 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.6, ease: "easeOut" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-tr from-black/45 via-black/10 to-transparent" />
+          <div className="absolute top-5 left-5 text-[10px] tracking-[0.3em] uppercase text-white/90">
+            Est. Delhi
+          </div>
+          <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between text-white">
+            <div>
+              <div className="font-display text-2xl md:text-3xl leading-none">Handcrafted</div>
+              <div className="text-[10px] tracking-[0.3em] uppercase mt-2 text-[oklch(0.85_0.12_85)]">In small batches</div>
+            </div>
+            <Sparkles className="h-6 w-6 text-[oklch(0.85_0.12_85)]" />
+          </div>
+        </div>
+        {/* Decorative accent frame */}
+        <div aria-hidden className="hidden md:block absolute -bottom-5 -right-5 w-2/3 h-2/3 border border-[oklch(0.78_0.13_85)]/50 -z-10" />
+        <div aria-hidden className="hidden md:block absolute -top-5 -left-5 w-1/3 h-1/3 bg-[oklch(0.97_0.03_85)] -z-10" />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
+      >
         <div className="text-[10px] tracking-[0.3em] uppercase text-[oklch(0.78_0.13_85)]">Our story</div>
         <h2 className="font-display text-3xl md:text-5xl mt-3">Made in India. Made for you.</h2>
         <p className="mt-6 text-foreground/70 leading-relaxed">
@@ -399,7 +436,7 @@ function BrandStory() {
         <Link to="/about" className="mt-8 inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] gold-underline">
           Read our story <ArrowRight className="h-4 w-4" />
         </Link>
-      </div>
+      </motion.div>
     </section>
   );
 }
