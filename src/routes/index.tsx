@@ -78,9 +78,9 @@ function Home() {
           <SeeMore to="/c/women/dress" label="See more women's categories" />
         </Section>
         <BannerStrip />
-        <Section title="Men's New Arrivals" subtitle="The latest drops for him">
+        <Section title="Men's New Arrivals" subtitle="The latest drops for him" link="/c/men/boxers" linkLabel="See more">
           <ProductRow items={data?.menNewArrivals ?? []} />
-          <SeeMore to="/men" label="See more men's categories" />
+          <SeeMore to="/c/men/boxers" label="See more men's categories" />
         </Section>
         <Reviews />
         <BrandStory />
