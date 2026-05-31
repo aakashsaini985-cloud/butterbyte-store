@@ -356,7 +356,7 @@ function Reviews() {
     { name: "Priya K.", city: "Delhi", text: "Premium quality at a fair price. Returns were quick when I sized up." },
   ];
   return (
-    <section className="bg-[oklch(0.97_0.01_85)] py-20 mt-16">
+    <section className="bg-[oklch(0.97_0.01_85)] py-12 md:py-20 mt-10 md:mt-16">
       <div className="mx-auto max-w-7xl px-6">
         <div className="text-center mb-12">
           <div className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">Loved by</div>
@@ -378,7 +378,7 @@ function Reviews() {
 
 function BrandStory() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
+    <section className="mx-auto max-w-7xl px-6 py-12 md:py-20 grid md:grid-cols-2 gap-10 md:gap-12 items-center">
       <div className="aspect-[4/5] overflow-hidden bg-muted">
         <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1200&q=80" alt="Brand" className="w-full h-full object-cover" />
       </div>
@@ -398,7 +398,7 @@ function BrandStory() {
 
 function Newsletter() {
   return (
-    <section className="bg-black text-white py-20">
+    <section className="bg-black text-white py-12 md:py-20">
       <div className="mx-auto max-w-3xl px-6 text-center">
         <div className="text-[10px] tracking-[0.3em] uppercase text-[oklch(0.85_0.12_85)]">Join the club</div>
         <h2 className="font-display text-4xl md:text-5xl mt-3">Early access. Better prices.</h2>
