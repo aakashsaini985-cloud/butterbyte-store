@@ -54,19 +54,29 @@ async function mapProducts(rows: any[]): Promise<ProductCard[]> {
 
 export const getHomeData = createServerFn({ method: "GET" }).handler(async () => {
   const sb = publicClient();
-  const [banners, newArr, best, trending, cats] = await Promise.all([
+  const { data: allCats } = await sb.from("categories").select("id,slug,gender");
+  const cats = allCats ?? [];
+  const menCatIds = cats.filter((c: any) => c.gender === "men").map((c: any) => c.id);
+  const womenTopsId = cats.find((c: any) => c.slug === "tops")?.id;
+
+  const sel = "*, product_images(url), categories(slug,name)";
+  const [banners, womenTops, menNew, menBest] = await Promise.all([
     sb.from("banners").select("*").eq("active", true).order("sort_order"),
-    sb.from("products").select("*, product_images(url), categories(slug,name)").order("created_at", { ascending: false }).limit(8),
-    sb.from("products").select("*, product_images(url), categories(slug,name)").eq("is_bestseller", true).limit(8),
-    sb.from("products").select("*, product_images(url), categories(slug,name)").eq("is_trending", true).limit(8),
-    sb.from("categories").select("*").order("sort_order"),
+    womenTopsId
+      ? sb.from("products").select(sel).eq("category_id", womenTopsId).order("created_at", { ascending: false }).limit(8)
+      : Promise.resolve({ data: [] as any[] }),
+    menCatIds.length
+      ? sb.from("products").select(sel).in("category_id", menCatIds).order("created_at", { ascending: false }).limit(8)
+      : Promise.resolve({ data: [] as any[] }),
+    menCatIds.length
+      ? sb.from("products").select(sel).in("category_id", menCatIds).eq("is_bestseller", true).limit(8)
+      : Promise.resolve({ data: [] as any[] }),
   ]);
   return {
     banners: banners.data ?? [],
-    newArrivals: await mapProducts(newArr.data ?? []),
-    bestSellers: await mapProducts(best.data ?? []),
-    trending: await mapProducts(trending.data ?? []),
-    categories: cats.data ?? [],
+    womenTops: await mapProducts(womenTops.data ?? []),
+    menNewArrivals: await mapProducts(menNew.data ?? []),
+    menBestSellers: await mapProducts(menBest.data ?? []),
   };
 });
 
