@@ -66,13 +66,13 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
   const [banners, womenTops, menNew, menBest] = await Promise.all([
     sb.from("banners").select("*").eq("active", true).order("sort_order"),
     womenTopsId
-      ? sb.from("products").select(sel).eq("category_id", womenTopsId).order("created_at", { ascending: false }).limit(8)
+      ? sb.from("products").select(sel).eq("is_active", true).eq("category_id", womenTopsId).order("created_at", { ascending: false }).limit(8)
       : Promise.resolve({ data: [] as any[] }),
     menCatIds.length
-      ? sb.from("products").select(sel).in("category_id", menCatIds).order("created_at", { ascending: false }).limit(8)
+      ? sb.from("products").select(sel).eq("is_active", true).in("category_id", menCatIds).order("created_at", { ascending: false }).limit(8)
       : Promise.resolve({ data: [] as any[] }),
     menCatIds.length
-      ? sb.from("products").select(sel).in("category_id", menCatIds).eq("is_bestseller", true).limit(8)
+      ? sb.from("products").select(sel).eq("is_active", true).in("category_id", menCatIds).eq("is_bestseller", true).limit(8)
       : Promise.resolve({ data: [] as any[] }),
   ]);
   return {
@@ -96,7 +96,7 @@ export const listProducts = createServerFn({ method: "GET" })
   }) => d)
   .handler(async ({ data }) => {
     const sb = publicClient();
-    let q = sb.from("products").select("*, product_images(url), product_variants(size,stock_qty), categories(slug,name,gender)", { count: "exact" });
+    let q = sb.from("products").select("*, product_images(url), product_variants(size,stock_qty), categories(slug,name,gender)", { count: "exact" }).eq("is_active", true);
     if (data.categorySlug) {
       const { data: cat } = await sb.from("categories").select("id").eq("slug", data.categorySlug).maybeSingle();
       if (cat) q = q.eq("category_id", cat.id);

@@ -378,6 +378,7 @@ export type Database = {
           description: string | null
           discount_pct: number
           id: string
+          is_active: boolean
           is_bestseller: boolean
           is_new: boolean
           is_trending: boolean
@@ -398,6 +399,7 @@ export type Database = {
           description?: string | null
           discount_pct?: number
           id?: string
+          is_active?: boolean
           is_bestseller?: boolean
           is_new?: boolean
           is_trending?: boolean
@@ -418,6 +420,7 @@ export type Database = {
           description?: string | null
           discount_pct?: number
           id?: string
+          is_active?: boolean
           is_bestseller?: boolean
           is_new?: boolean
           is_trending?: boolean
