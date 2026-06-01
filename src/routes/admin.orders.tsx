@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Fragment } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
@@ -64,8 +65,8 @@ function OrdersAdmin() {
                 const addr = o.address_snapshot ?? {};
                 const open = expanded === o.id;
                 return (
-                  <>
-                    <tr key={o.id} className="border-t hover:bg-muted/30 cursor-pointer" onClick={() => setExpanded(open ? null : o.id)}>
+                  <Fragment key={o.id}>
+                    <tr className="border-t hover:bg-muted/30 cursor-pointer" onClick={() => setExpanded(open ? null : o.id)}>
                       <td className="p-3">{open ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}</td>
                       <td className="p-3 font-mono text-xs">{o.order_no}</td>
                       <td className="p-3 text-muted-foreground text-xs">{new Date(o.created_at).toLocaleString()}</td>
@@ -115,7 +116,7 @@ function OrdersAdmin() {
                         </td>
                       </tr>
                     )}
-                  </>
+                  </Fragment>
                 );
               })}
               {visible.length === 0 && <tr><td colSpan={6} className="p-8 text-center text-muted-foreground">No orders.</td></tr>}
