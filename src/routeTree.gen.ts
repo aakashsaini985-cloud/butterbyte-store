@@ -35,6 +35,7 @@ import { Route as PSlugRouteImport } from './routes/p.$slug'
 import { Route as AdminProductsRouteImport } from './routes/admin.products'
 import { Route as AdminOrdersRouteImport } from './routes/admin.orders'
 import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
+import { Route as AccountAdminRouteImport } from './routes/account.admin'
 import { Route as CGenderSlugRouteImport } from './routes/c.$gender.$slug'
 
 const WomenRoute = WomenRouteImport.update({
@@ -167,6 +168,11 @@ const AdminCategoriesRoute = AdminCategoriesRouteImport.update({
   path: '/categories',
   getParentRoute: () => AdminRoute,
 } as any)
+const AccountAdminRoute = AccountAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AccountRoute,
+} as any)
 const CGenderSlugRoute = CGenderSlugRouteImport.update({
   id: '/c/$gender/$slug',
   path: '/c/$gender/$slug',
@@ -176,7 +182,7 @@ const CGenderSlugRoute = CGenderSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/account': typeof AccountRoute
+  '/account': typeof AccountRouteWithChildren
   '/admin': typeof AdminRouteWithChildren
   '/cart': typeof CartRoute
   '/categories': typeof CategoriesRoute
@@ -195,6 +201,7 @@ export interface FileRoutesByFullPath {
   '/track-order': typeof TrackOrderRoute
   '/wishlist': typeof WishlistRoute
   '/women': typeof WomenRoute
+  '/account/admin': typeof AccountAdminRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/orders': typeof AdminOrdersRoute
   '/admin/products': typeof AdminProductsRoute
@@ -205,7 +212,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/account': typeof AccountRoute
+  '/account': typeof AccountRouteWithChildren
   '/cart': typeof CartRoute
   '/categories': typeof CategoriesRoute
   '/checkout': typeof CheckoutRoute
@@ -223,6 +230,7 @@ export interface FileRoutesByTo {
   '/track-order': typeof TrackOrderRoute
   '/wishlist': typeof WishlistRoute
   '/women': typeof WomenRoute
+  '/account/admin': typeof AccountAdminRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/orders': typeof AdminOrdersRoute
   '/admin/products': typeof AdminProductsRoute
@@ -234,7 +242,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/account': typeof AccountRoute
+  '/account': typeof AccountRouteWithChildren
   '/admin': typeof AdminRouteWithChildren
   '/cart': typeof CartRoute
   '/categories': typeof CategoriesRoute
@@ -253,6 +261,7 @@ export interface FileRoutesById {
   '/track-order': typeof TrackOrderRoute
   '/wishlist': typeof WishlistRoute
   '/women': typeof WomenRoute
+  '/account/admin': typeof AccountAdminRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/orders': typeof AdminOrdersRoute
   '/admin/products': typeof AdminProductsRoute
@@ -284,6 +293,7 @@ export interface FileRouteTypes {
     | '/track-order'
     | '/wishlist'
     | '/women'
+    | '/account/admin'
     | '/admin/categories'
     | '/admin/orders'
     | '/admin/products'
@@ -312,6 +322,7 @@ export interface FileRouteTypes {
     | '/track-order'
     | '/wishlist'
     | '/women'
+    | '/account/admin'
     | '/admin/categories'
     | '/admin/orders'
     | '/admin/products'
@@ -341,6 +352,7 @@ export interface FileRouteTypes {
     | '/track-order'
     | '/wishlist'
     | '/women'
+    | '/account/admin'
     | '/admin/categories'
     | '/admin/orders'
     | '/admin/products'
@@ -352,7 +364,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  AccountRoute: typeof AccountRoute
+  AccountRoute: typeof AccountRouteWithChildren
   AdminRoute: typeof AdminRouteWithChildren
   CartRoute: typeof CartRoute
   CategoriesRoute: typeof CategoriesRoute
@@ -559,6 +571,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCategoriesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/account/admin': {
+      id: '/account/admin'
+      path: '/admin'
+      fullPath: '/account/admin'
+      preLoaderRoute: typeof AccountAdminRouteImport
+      parentRoute: typeof AccountRoute
+    }
     '/c/$gender/$slug': {
       id: '/c/$gender/$slug'
       path: '/c/$gender/$slug'
@@ -568,6 +587,17 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AccountRouteChildren {
+  AccountAdminRoute: typeof AccountAdminRoute
+}
+
+const AccountRouteChildren: AccountRouteChildren = {
+  AccountAdminRoute: AccountAdminRoute,
+}
+
+const AccountRouteWithChildren =
+  AccountRoute._addFileChildren(AccountRouteChildren)
 
 interface AdminRouteChildren {
   AdminCategoriesRoute: typeof AdminCategoriesRoute
@@ -588,7 +618,7 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  AccountRoute: AccountRoute,
+  AccountRoute: AccountRouteWithChildren,
   AdminRoute: AdminRouteWithChildren,
   CartRoute: CartRoute,
   CategoriesRoute: CategoriesRoute,
@@ -613,3 +643,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
