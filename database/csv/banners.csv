@@ -1,0 +1,10 @@
+id,title,subtitle,cta_label,cta_href,image_url,sort_order,active,created_at
+781d12ec-434e-41e3-b05d-f64c2da3c6a6,Women's Festive Edit,"Lehengas, sarees & kurta sets to turn heads",Shop Women,/women,,1,t,2026-05-30 23:49:41.970645+00
+4999b6d7-2314-486d-b1a9-043a0be38b5a,Men's Sherwani Season,Hand-crafted ethnic for every celebration,Shop Men,/men,,2,t,2026-05-30 23:49:41.970645+00
+558f3dac-8cac-42d8-8a5e-97c968e2f9fc,New Arrivals,Fresh drops from BUTTERBYTE STORE,Explore Collection,/shop?sort=new,,3,t,2026-05-30 23:49:41.970645+00
+32f51a4f-d7f9-4c92-8cd0-cc31a75e09b0,Trending Now,What the country is wearing this week,Shop Now,/shop?filter=trending,,4,t,2026-05-30 23:49:41.970645+00
+ab644bf7-33d2-44e7-b0e7-0314416cff9b,Seasonal Sale,Up to 60% off across categories,Shop Now,/shop?filter=sale,,5,t,2026-05-30 23:49:41.970645+00
+ca8d7d39-05f6-4c49-abdd-8a17742e043e,Best Sellers,"Tried, loved, restocked",Shop Now,/shop?filter=bestsellers,,6,t,2026-05-30 23:49:41.970645+00
+8665b7ad-5150-40b5-b289-f784468f307a,Edit of the Season,Hand-picked silhouettes in muted tones — wear it like you mean it.,Shop Women,/women,https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1920&q=80,1,t,2026-05-30 23:58:01.735385+00
+6a973f98-c7f9-444a-a735-d399c31d9189,Crafted in India,From kurta sets to lehengas — modern cuts in heritage fabric.,Explore Ethnic,/c/kurta-set,https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=1920&q=80,2,t,2026-05-30 23:58:01.735385+00
+c5ea3df2-84a3-4ba6-812b-16edec7b9b87,The Denim Story,"Straight, slim, relaxed — find your fit.",Shop Denim,/c/jeans,https://images.unsplash.com/photo-1542272604-787c3835535d?w=1920&q=80,3,t,2026-05-30 23:58:01.735385+00

@@ -1,0 +1,18 @@
+id,slug,name,gender,image_url,sort_order,created_at
+13fe2d01-8918-412c-8917-c508525e02b5,dress,Dress,women,,1,2026-05-30 23:49:41.970645+00
+d61afce9-9269-4065-a9bf-8bb446295246,jeans,Jeans,women,,2,2026-05-30 23:49:41.970645+00
+1b76098d-5b6f-47c7-808b-67caf0b8c0d8,kurta-set,Kurta Set,women,,3,2026-05-30 23:49:41.970645+00
+29efa722-fa1f-464e-a05b-743d1263f8ac,kurti,Kurti,women,,4,2026-05-30 23:49:41.970645+00
+e56362d3-77da-4e7c-89d0-a04fc776c06e,lehenga-choli-sets,Lehenga Choli Sets,women,,5,2026-05-30 23:49:41.970645+00
+2d3c79cf-b249-439b-9d9e-8f1a0e164d4a,pyjamas-shorts,Pyjamas & Shorts,women,,6,2026-05-30 23:49:41.970645+00
+dd552623-10c7-4a73-8ad4-d3211cccce74,saree,Saree,women,,7,2026-05-30 23:49:41.970645+00
+5af8213b-af8d-4e0b-b176-dfff53880fe9,tops,Tops,women,,8,2026-05-30 23:49:41.970645+00
+5e78d4d1-079c-4c6d-8df1-d23a572cea50,boxers,Boxers,men,,1,2026-05-30 23:49:41.970645+00
+ae2f19b0-2591-4601-8224-d0bc9fad7316,ethnic-jackets,Ethnic Jackets,men,,2,2026-05-30 23:49:41.970645+00
+49a84477-b046-4539-893c-87b4a248f4ce,mens-jeans,Jeans,men,,3,2026-05-30 23:49:41.970645+00
+32a60774-521d-467a-9757-208ffc4b9c1a,joggers-track-pants,Joggers & Track Pants,men,,4,2026-05-30 23:49:41.970645+00
+cfcad8f4-9960-4d63-9227-afec33560db2,kurtas,Kurtas,men,,5,2026-05-30 23:49:41.970645+00
+88cc8726-ce23-4273-8587-252dc5ab01eb,sherwani,Sherwani,men,,6,2026-05-30 23:49:41.970645+00
+5cf0aeba-6b4d-471f-9d95-4a59aae4aa11,shirt,Shirt,men,,7,2026-05-30 23:49:41.970645+00
+21839048-deb4-4dcb-9384-a5cb49e7dfa8,mens-shorts,Shorts,men,,8,2026-05-30 23:49:41.970645+00
+d5ce200a-cd25-4a93-8ec1-851dbaa9a41c,suit,Suit,men,,9,2026-05-30 23:49:41.970645+00
