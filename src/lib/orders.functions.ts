@@ -46,7 +46,7 @@ export const createOrder = createServerFn({ method: "POST" })
     );
     if (productIds.length === 0) throw new Error("Invalid cart: missing product references");
 
-    const { data: dbProducts, error: prodErr } = await supabaseAdmin
+    const { data: dbProducts, error: prodErr } = await supabase
       .from("products")
       .select("id, name, selling_price")
       .in("id", productIds);
